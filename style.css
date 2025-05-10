@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primario: #fff;
+    --fondo: #fdf2f8; /* Fondo suave */
+    --fondo-sobre: #ffe7f2; /* Fondo sobre más cálido */
+    --solapa-sobre: #f8c1d6; /* Solapa de sobre más clara */
+    --cuerpo-sobre: #fcc7d2; /* Color más cálido para el cuerpo del sobre */
+    --sombra: rgba(0, 0, 0, 0.25); /* Sombra más sutil */
+    --texto: #4d3b64; /* Color de texto más elegante */
+    --corazon: #ff3366; /* Corazón con un tono más vibrante */
+}
+
+body {
+    background: var(--fondo);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    font-family: "Arial", sans-serif;
+}
+
+h1 {
+    font-family: "Marck Script", cursive;
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 50px;
+    color: var(--texto);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2); /* Añadiendo sombra al texto */
+}
+
+.contenedor {
+    width: 420px;
+    transform: scale(1.05); /* Un pequeño efecto de escala para un look más llamativo */
+}
+
+.envoltura-sobre {
+    position: relative;
+    background-color: var(--fondo-sobre);
+    box-shadow: 0 0 20px var(--sombra);
+    border-radius: 20px;
+    transform: rotate(2deg); /* Rotación ligera para un toque moderno */
+    transition: transform 0.5s ease-in-out;
+}
+
+.sobre {
+    position: relative;
+    width: 100%;
+    height: 350px;
+}
+
+.sobre::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 4;
+    border-top: 190px solid var(--solapa-sobre);
+    border-right: 210px solid transparent;
+    border-left: 210px solid transparent;
+    transform-origin: top;
+    transition: all 0.5s ease-in-out 0.7s;
+    border-radius: 12px;
+}
+
+.solapa-derecha {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    background-color: var(--cuerpo-sobre);
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.solapa-izquierda {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 0 100%, 100% 100%);
+    background-color: var(--cuerpo-sobre);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.carta {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primario);
+    text-align: center;
+    box-shadow: 0 0 10px var(--sombra);
+    padding: 30px 20px;
+    border-radius: 20px;
+    transition: transform 0.5s ease-in-out;
+}
+
+.contenido {
+    font-family: "Gill Sans", Calibri, sans-serif;
+    color: var(--texto);
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.6;
+    border: 2px dotted var(--texto);
+    padding: 15px;
+    height: 100%;
+    cursor: pointer;
+    overflow-y: scroll;
+}
+
+.corazon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 35px;
+    height: 35px;
+    background-color: var(--corazon);
+    transform: translate(-50%, -50%) rotate(45deg);
+    transition: transform 0.5s ease-in-out;
+    z-index: 999;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--sombra);
+}
+
+.corazon::before,
+.corazon::after {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-color: var(--corazon);
+    border-radius: 50%;
+}
+
+.corazon:before {
+    top: -18px;
+}
+
+.corazon:after {
+    right: 18px;
+}
+
+.abierto .sobre::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.abierto .corazon {
+    transform: rotate(90deg);
+    transition-delay: 0.4s;
+}
+
+.carta.mostrar-carta {
+    transform: translateY(-300px);
+    transition: transform .5s ease-in-out;
+}
+
+.carta.cerrando-carta {
+    transform: translateY(-300px);
+    transition: transform .5s ease-in-out;
+}
+
+.carta.abierta {
+    z-index: 10000;
+}
+
+.envoltura-sobre.desactivar-sobre .sobre::before {
+    pointer-events: none;
+}
+
+/* Vista móvil */
+@media screen and (max-width: 400px) {
+    .contenedor {
+        width: 330px;
+    }
+
+    .sobre {
+        width: 330px;
+        height: 280px;
+    }
+
+    .sobre::before {
+        border-top: 160px solid var(--solapa-sobre);
+        border-right: 160px solid transparent;
+        border-left: 160px solid transparent;
+    }
+}
+
